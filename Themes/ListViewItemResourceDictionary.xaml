@@ -1,0 +1,67 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    
+    <Style TargetType="ListViewItem" x:Key="contactcard">
+        <Style.Triggers>
+            <Trigger Property="IsSelected" Value="True">
+                <Setter Property="Background" Value="#292b2F"/>
+            </Trigger>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="#292b50"/>
+                <Setter Property="Cursor" Value="Hand"/>
+            </Trigger>
+        </Style.Triggers>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ListViewItem">
+                    <Border BorderBrush="Black" BorderThickness="0 1 0 0" Margin="5 2" CornerRadius="5" Background="{TemplateBinding Background}">
+                        <StackPanel Orientation="Horizontal" Margin="5 2">
+                            <Ellipse Margin="2" Height="30" Width="30">
+                                <Ellipse.Fill>
+                                    <ImageBrush ImageSource="{Binding ImageUrl}"/>
+                                </Ellipse.Fill>
+                            </Ellipse>
+                            <StackPanel Orientation="Vertical">
+                                <Label Content="{Binding ContactName}" Foreground="White" FontSize="15" FontWeight="DemiBold"/>
+                                <Label Content="{Binding Mobile}" Foreground="GhostWhite" FontSize="10"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
+    <Style TargetType="ListViewItem" x:Key="messageitem">
+        <Style.Triggers>
+            <Trigger Property="IsSelected" Value="True">
+                <Setter Property="Background" Value="#292b2F"/>
+            </Trigger>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="#292b50"/>
+            </Trigger>
+        </Style.Triggers>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ListViewItem">
+                    <Border BorderBrush="Black" BorderThickness="0 1 0 0" Margin="5 2" CornerRadius="5" Background="{TemplateBinding Background}">
+                        <StackPanel Orientation="Horizontal" Margin="5 2">
+                            <Ellipse Margin="2" Height="30" Width="30">
+                                <Ellipse.Fill>
+                                    <ImageBrush ImageSource="{Binding Sender.ImageUrl}"/>
+                                </Ellipse.Fill>
+                            </Ellipse>
+                            <StackPanel Orientation="Vertical">
+                                <Label Content="{Binding Sender.FullName}" Foreground="White" FontSize="10" FontWeight="DemiBold"/>
+                                <Label Content="{Binding MessageBody}" Foreground="GhostWhite" FontSize="12"/>
+                                <Label Content="{Binding SentTime}" Foreground="GhostWhite" FontSize="8"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
+    
+</ResourceDictionary>

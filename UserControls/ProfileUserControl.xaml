@@ -1,0 +1,49 @@
+﻿<UserControl x:Class="ChatApp.UserControls.ProfileUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ChatApp.UserControls"
+             xmlns:viewmodels="clr-namespace:ChatApp.ViewModel"
+             mc:Ignorable="d" 
+             Background="Transparent"
+             d:DesignHeight="300" d:DesignWidth="800">
+    <UserControl.DataContext>
+        <viewmodels:ProfileViewModel/>
+    </UserControl.DataContext>
+    <Border CornerRadius="15 5 15 5">
+        <Grid Margin="20">
+            <!--#region Row Col definitions-->
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <!--#endregion-->
+
+            <Label HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="0" Grid.Row="0" Content="Full Name:"/>
+            <TextBox Text="{Binding Name, Mode=TwoWay}" Padding="5" Margin="10" Grid.Column="1" Grid.Row="0"/>
+            <Label HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="0" Grid.Row="1" Content="Mail Id:"/>
+            <TextBox Text="{Binding Mailid, Mode=TwoWay}" Padding="5" Margin="10" Grid.Column="1" Grid.Row="1"/>
+            <Label HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="0" Grid.Row="2" Content="Mobile:"/>
+            <TextBox  Text="{Binding Mobile, Mode=OneWay}" IsEnabled="False" Padding="5" Margin="10" Grid.Column="1" Grid.Row="2"/>
+            <!--<Ellipse Height="50" Width="50" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="0" Grid.Row="3">
+                <Ellipse.Fill>
+                    <ImageBrush ImageSource="{Binding ImageUrl}"/>
+                </Ellipse.Fill>
+            </Ellipse>-->
+            <Label Content="Image URL:" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="0" Grid.Row="3"/>
+
+            <TextBox  Text="{Binding ImageUrl, Mode=TwoWay}" Padding="5" Margin="10" Grid.Column="1" Grid.Row="3"/>
+            <StackPanel Grid.Row="4"  Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center">
+                <Button Command="{Binding SaveDataCommand}" IsDefault="True" Margin="10 0 10 10" Content="Save"/>
+            </StackPanel>
+        </Grid>
+    </Border>
+</UserControl>

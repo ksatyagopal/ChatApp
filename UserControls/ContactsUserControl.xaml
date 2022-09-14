@@ -1,0 +1,109 @@
+﻿<UserControl x:Class="ChatApp.UserControls.ContactsUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ChatApp.UserControls"
+             xmlns:viewmodels="clr-namespace:ChatApp.ViewModel"
+             mc:Ignorable="d" 
+             Background="Transparent"
+              d:DesignWidth="800">
+    <UserControl.DataContext>
+        <viewmodels:ContactsViewModel/>
+    </UserControl.DataContext>
+    <UserControl.Resources>
+        
+    </UserControl.Resources>
+    <Border CornerRadius="15 5 15 5" 
+            ScrollViewer.CanContentScroll="True"
+            SelectiveScrollingGrid.SelectiveScrollingOrientation="Vertical">
+        <StackPanel>
+            <StackPanel.Resources>
+                <DataTemplate x:Key="CN">
+                    <Border>
+                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding ContactName}" />
+                    </Border>
+                </DataTemplate>
+                <DataTemplate x:Key="CNEdit"/>
+                
+                <DataTemplate x:Key="CImage">
+                    <Border Margin="5" CornerRadius="20" Height="60" Width="60">
+                        <Border.Background>
+                            <ImageBrush ImageSource="{Binding ImageUrl}"/>
+                        </Border.Background>
+                    </Border>
+                </DataTemplate>
+
+                <DataTemplate x:Key="CImageEdit">
+                    <Border Margin="5" CornerRadius="20" Height="60" Width="60">
+                        <Border.Background>
+                            <ImageBrush ImageSource="{Binding ImageUrl}"/>
+                        </Border.Background>
+                    </Border>
+                </DataTemplate>
+                
+                <DataTemplate x:Key="ContactCard">
+                    <StackPanel Orientation="Vertical">
+                        <StackPanel Orientation="Horizontal">
+                            <Border Background="CornflowerBlue" CornerRadius="35 0 0 35">
+                                <Border Margin="5" CornerRadius="35" Height="60" Width="60">
+                                    <Border.Background>
+                                        <ImageBrush ImageSource="{Binding ImageUrl}"/>
+                                    </Border.Background>
+                                </Border>
+                            </Border>
+                            <StackPanel Background="CornflowerBlue">
+                                <TextBlock Text="{Binding ContactName}" Padding="5" FontSize="20" FontWeight="DemiBold" />
+                                <TextBlock Text="{Binding Mobile}" Padding="5" FontSize="15"/>
+                                <TextBlock Text="{Binding Address}" Padding="5" FontSize="10"/>
+                            </StackPanel>
+                        </StackPanel>
+                        
+                    </StackPanel>
+                   
+                </DataTemplate>
+                
+            </StackPanel.Resources>
+            <!--<ListView Background="Transparent"  ItemsSource="{Binding Contacts}">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Contact Name" DisplayMemberBinding="{Binding ContactName}"/>
+                        <GridViewColumn Header="Mobile" DisplayMemberBinding="{Binding Mobile}"/>
+                        <GridViewColumn Header="Address" DisplayMemberBinding="{Binding Address}"/>
+                    </GridView>
+                </ListView.View>
+            </ListView>-->
+            
+            <DataGrid IsManipulationEnabled="False" 
+                      ScrollViewer.CanContentScroll="True"
+                      VerticalScrollBarVisibility="Auto"
+                      CanUserDeleteRows="True" 
+                      CanUserAddRows="False" 
+                      AutoGenerateColumns="False"
+                      MaxHeight="300"
+                      ItemsSource="{Binding Contacts}">
+                <DataGrid.Columns>
+                    
+                    <!--<DataGridTemplateColumn CellTemplate="{StaticResource ContactCard}"/>-->
+                    <DataGridTemplateColumn CellEditingTemplate="{StaticResource CImageEdit}"
+                                            CellTemplate="{StaticResource CImage}"
+                                            />
+                    <DataGridTemplateColumn Header="Contact Name"
+                                            IsReadOnly="False"
+                                            CanUserSort="True"
+                                            CanUserResize="True"
+                                            CanUserReorder="True"
+                                            CellTemplate="{StaticResource CN}"
+                                            Width="*"/>
+                    <DataGridTextColumn Header="Mobile"
+                                        
+                                        Binding="{Binding Mobile}" Width="*"/>
+                    <DataGridTextColumn Header="Address" 
+                                        Binding="{Binding Address}" Width="*"/>
+                    
+                </DataGrid.Columns>
+            </DataGrid>
+        </StackPanel>
+    </Border>
+    
+</UserControl>

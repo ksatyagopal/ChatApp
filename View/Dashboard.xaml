@@ -1,0 +1,266 @@
+﻿<Window x:Class="ChatApp.View.Dashboard"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ChatApp.View"
+        xmlns:viewmodels="clr-namespace:ChatApp.ViewModel"
+        xmlns:converters="clr-namespace:ChatApp.Converters"
+        xmlns:usercontrolss="clr-namespace:ChatApp.UserControls"
+        mc:Ignorable="d"
+        x:Name="dashwindow"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
+        BorderThickness="0"
+        ResizeMode="CanResizeWithGrip"
+        Background="Transparent"
+        Title="Flash" Height="450" Width="800">
+    
+    <!--#region Data Context-->
+    <Window.DataContext>
+        <viewmodels:DashboardViewModel />
+    </Window.DataContext>
+    <!--#endregion-->
+    
+    <!--#region Window Resources-->
+    <Window.Resources>
+        
+        <!--#region Converters-->
+        <converters:BooleanToAvailabilityConverter x:Key="bA"/>
+        <!--#endregion-->
+        
+        <!--#region Styling Window Navigation Buttons-->
+        <Style TargetType="Button" x:Key="WNav">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Margin" Value="10 0 0 0"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Width" Value="30"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Cursor" Value="Hand"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style TargetType="Button" BasedOn="{StaticResource WNav}" x:Key="derivedWNav">
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="Red"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <!--#endregion-->
+
+        <Style TargetType="MenuItem">
+            <Setter Property="Background" Value="#2f3136"/>
+            <Setter Property="Foreground" Value="White"/>
+            
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Cursor" Value="Hand"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="CornflowerBlue"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Width" Value="100"/>
+            <Setter Property="Margin" Value="10 0 0 0"/>
+        </Style>
+        
+        <Style TargetType="TextBox">
+            <Setter Property="Height" Value="30"/>
+        </Style>
+
+        <Style TargetType="ToggleButton" x:Key="LightDarkMode">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Width" Value="30"/>
+            <Setter Property="Margin" Value="10 0 10 0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ToggleButton">
+                        <Border>
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsChecked" Value="True">
+                    <Setter Property="Content" Value="🔅"/>
+                    <Setter Property="Foreground" Value="White"/>
+                </Trigger>
+                <Trigger Property="IsChecked" Value="False">
+                    <Setter Property="Content" Value="🌙"/>
+                    <Setter Property="Foreground" Value="Black"/>
+                </Trigger>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Cursor" Value="Hand"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+    </Window.Resources>
+    <!--#endregion-->
+
+    <Border Background="Gray">
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Border Grid.Row="0" Background="CornflowerBlue" MouseDown="Border_MouseDown">
+                <Grid>
+                    <TextBlock Text="FlashApp" Foreground="White" Margin="10 5" HorizontalAlignment="left"/>
+                    <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                        <Button Content="🔃" Style="{StaticResource WNav}" Click="reload_Click">
+                            <Button.ToolTip>
+                                <ToolTip>Reload</ToolTip>
+                            </Button.ToolTip>
+                        </Button>
+                        <ToggleButton x:Name="togglemode" IsChecked="True" Click="wmode_Click" Style="{StaticResource LightDarkMode}">
+                            <ToggleButton.ToolTip>
+                                <ToolTip>Click to Change Mode</ToolTip>
+                            </ToggleButton.ToolTip>
+                        </ToggleButton>
+                        
+                        <Button Content="🗕" Style="{StaticResource WNav}" Click="Minimize_Click">
+                            <Button.ToolTip>
+                                <ToolTip>Minimize</ToolTip>
+                            </Button.ToolTip>
+                        </Button>
+                        <Button Content="🗖" Style="{StaticResource WNav}" Click="Maximize_Click">
+                            <Button.ToolTip>
+                                <ToolTip>Maximize</ToolTip>
+                            </Button.ToolTip>
+                        </Button>
+                        <Button Content="🗙" Style="{StaticResource derivedWNav}" Click="Close_Click">
+                            <Button.ToolTip>
+                                <ToolTip>Close</ToolTip>
+                            </Button.ToolTip>
+                        </Button>
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <DockPanel Grid.Row="1">
+
+                <DockPanel DockPanel.Dock="Top" Height="50" Margin="5 10">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                        <Border Width="40" Height="40" CornerRadius="20">
+                            <Border.Background>
+                                <ImageBrush ImageSource="{Binding CUser.ImageUrl}"/>
+                            </Border.Background>
+                        </Border>
+                        <TextBlock FontWeight="Bold" FontSize="20" Margin="10 0" VerticalAlignment="Center" Foreground="CornflowerBlue" Text="{Binding CUser.FullName}">
+                            <TextBlock.Effect>
+                                <DropShadowEffect
+                                    ShadowDepth="4"
+                                    Direction="330"
+                                    Color="Black"
+                                    Opacity="0.4"
+                                    BlurRadius="3"/>
+                            </TextBlock.Effect>
+                        </TextBlock>
+                        
+                    </StackPanel>
+                    <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                        <Button Command="{Binding swapUserControls}" CommandParameter="profile" Content="Profile"/>
+                        <Button Command="{Binding swapUserControls}" CommandParameter="contacts" Content="Contacts"/>
+                        <Button Command="{Binding swapUserControls}" CommandParameter="addnew" Content="Add New"/>
+                        <Button Command="{Binding logoutCommand}" Content="Logout"/>
+                    </StackPanel>
+
+                </DockPanel>
+
+                <DockPanel x:Name="dockleft" Margin="5" DockPanel.Dock="Left" Width="200" Background="DarkGray">
+                    <ListView Background="Transparent" 
+                              SelectedItem="{Binding SelectedContact}"
+                              ItemsSource="{Binding Contacts}"
+                              ItemContainerStyle="{StaticResource contactcard}">
+
+                    </ListView>
+                </DockPanel>
+
+                <DockPanel x:Name="dockmiddle" Margin="5" MinWidth="250" MaxWidth="400">
+                    <Border BorderBrush="Black" BorderThickness="1">
+                        <Grid>
+                            <Grid.Background>
+                                <ImageBrush Opacity="0.7" ImageSource="../Assets/chatBackground.png" Stretch="Uniform"/>
+                            </Grid.Background>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="50"/>
+                                <RowDefinition/>
+                                <RowDefinition Height="50"/>
+                            </Grid.RowDefinitions>
+                            
+                            <Border Grid.Row="0" Background="#2f3136">
+                                <StackPanel Orientation="Horizontal">
+                                    <StackPanel Width="210" Margin="5 2" HorizontalAlignment="Stretch">
+                                        <Label x:Name="contactname" Foreground="White" Content="{Binding SelectedContact.ContactName}"/>
+                                        <Label FontSize="7" Foreground="White" Content="{Binding SelectedContactStatus, Converter={StaticResource bA}}"/>
+                                    </StackPanel>
+                                    <Menu Margin="10 15" FontWeight="Bold" Foreground="White" Background="#2f3136">
+                                        <Menu.Style>
+                                            <Style>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding ElementName=contactname, Path=Content}" Value="{x:Null}">
+                                                        <Setter Property="Menu.Visibility" Value="Collapsed"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                            
+                                        </Menu.Style>
+                                        <MenuItem Header="⠇">
+                                            <MenuItem Header="Delete" Command="{Binding DeleteChatCommand}"/>
+                                        </MenuItem>
+                                    </Menu>
+                                </StackPanel>
+                            </Border>
+                            
+                            <ListView Grid.Row="1" Background="Transparent" 
+                                      ItemsSource="{Binding SelectedContactMessages}"
+                                      ItemContainerStyle="{StaticResource messageitem}">
+                            </ListView>
+                            
+                            <Border Grid.Row="2" Background="#2f3136">
+                                <StackPanel Margin="2 5 2 5" HorizontalAlignment="Stretch" Orientation="Horizontal">
+                                    <TextBox Text="{Binding Message}" Foreground="Black" MaxWidth="250" MinWidth="200"/>
+                                    <Button Command="{Binding sendMessageCommand}" IsDefault="True" Width="50" Content="Send"/>
+                                </StackPanel>
+                            </Border>
+                        </Grid>
+                    </Border>
+                </DockPanel>
+               
+                <Border x:Name="dockright" BorderBrush="DimGray" BorderThickness="1" Margin="10 5" Background="DarkGray" CornerRadius="5 5 5 5">
+                    <DockPanel DockPanel.Dock="Right">
+                        <DockPanel.Background>
+                            <ImageBrush Opacity="0.4" ImageSource="../Assets/Background2.png" Stretch="Uniform"/>
+                        </DockPanel.Background>
+
+                        <ContentControl Margin="10" Content="{Binding CurrentVM}" x:Name="currentUC"/>
+
+                    </DockPanel>
+                </Border>
+                
+            </DockPanel>
+
+        </Grid>
+    </Border>
+</Window>
