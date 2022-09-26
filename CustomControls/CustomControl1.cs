@@ -44,11 +44,12 @@ namespace ChatApp.CustomControls
     ///     <MyNamespace:CustomControl1/>
     ///
     /// </summary>
-    public class CustomControl1 : Control
+    public class CustomControl1 : Button
     {
         static CustomControl1()
         {
-            DefaultStyleKeyProperty.OverrideMetadata(typeof(CustomControl1), new FrameworkPropertyMetadata(typeof(CustomControl1)));
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(CustomControl1), 
+                new FrameworkPropertyMetadata(typeof(CustomControl1)));
         }
     }
 }

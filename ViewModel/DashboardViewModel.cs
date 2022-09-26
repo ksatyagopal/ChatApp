@@ -107,12 +107,6 @@ namespace ChatApp.ViewModel
         }
         #endregion
 
-        #region User Controls
-        public ProfileUserControl profileUC = new();
-        public AddContactUserControl addContactUC = new();
-        public ContactsUserControl contactsUC = new();
-        #endregion
-
         #region Commands
         public ICommand swapUserControls { get; }
         public ICommand logoutCommand { get; }
@@ -205,16 +199,15 @@ namespace ChatApp.ViewModel
         {
             if (para.ToString() == "addnew")
             {
-                CurrentVM = addContactUC;
+                CurrentVM = new AddContactUserControl();
             }
             else if(para.ToString() == "profile")
             {
-                CurrentVM = profileUC;
+                CurrentVM = new ProfileUserControl();
             }
             else if(para.ToString() == "contacts")
             {
-                contactsUC = new();
-                CurrentVM = contactsUC;
+                CurrentVM = new ContactsUserControl();
             }
         }
 

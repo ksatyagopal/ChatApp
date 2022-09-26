@@ -13,12 +13,16 @@ namespace ChatApp.ViewModel
 {
     public class ProfileViewModel: ViewModelBase
     {
-        private string name = App.Current.Properties["username"].ToString();
-        private string mailid = App.Current.Properties["mailid"].ToString();
-        private string mobile = App.Current.Properties["mobile"].ToString();
-        private string imageUrl = App.Current.Properties["imageurl"].ToString();
+        private User user;
+        public User User
+        {
+            get { return user; }
+            set { user = value; OnPropertyChanged(nameof(User)); isdataChnaged = true; }
+        }
+        
         private bool isdataChnaged = false;
         
+        /*
         public string Name
         {
             get { return name; }
@@ -38,39 +42,29 @@ namespace ChatApp.ViewModel
         {
             get { return imageUrl; }
             set { imageUrl = value; OnPropertyChanged(nameof(ImageUrl)); isdataChnaged = true; }
-        }
+        }*/
 
         private readonly FlashContext _context = new();
         public ICommand SaveDataCommand { get; }
 
         public ProfileViewModel()
         {
+            User = _context.Users.Find(App.Current.Properties["userid"]);
             SaveDataCommand = new RelayCommand(SaveData, CanSave);
         }
 
         private bool CanSave(object parameter)
         {
-            return isdataChnaged && !string.IsNullOrEmpty(Mailid) && !string.IsNullOrEmpty(Name);
+            return isdataChnaged && !string.IsNullOrEmpty(User.MailId) && !string.IsNullOrEmpty(User.FullName);
         }
 
         private void SaveData(object parameter)
         {
-            User user = _context.Users.Find(App.Current.Properties["userid"]);
-            if (user != null)
-            {
-                user.FullName = Name;
-                user.MailId = Mailid;
-                user.ImageUrl = ImageUrl;
-                _context.SaveChanges();
-                isdataChnaged = false;
-                MessageBox.Show("Profile Saved");
-                App.Current.Properties["userid"] = user.Id;
-                App.Current.Properties["username"] = user.FullName;
-                App.Current.Properties["mobile"] = user.Mobile;
-                App.Current.Properties["mailid"] = user.MailId;
-                App.Current.Properties["imageurl"] = (user.ImageUrl == null) ? "https://img.icons8.com/material-rounded/344/user-male-circle.png" : user.ImageUrl;
-                App.Current.Windows[0].DataContext = new DashboardViewModel();
-            }
+            _context.Users.Update(User);
+            _context.SaveChanges();
+            MessageBox.Show("Profile Saved");
+            App.Current.Windows[0].DataContext = new DashboardViewModel();
+            
         }
     }
 }

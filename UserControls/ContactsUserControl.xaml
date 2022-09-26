@@ -19,12 +19,17 @@
             SelectiveScrollingGrid.SelectiveScrollingOrientation="Vertical">
         <StackPanel>
             <StackPanel.Resources>
-                <DataTemplate x:Key="CN">
-                    <Border>
+                <DataTemplate x:Key="Display">
+                    <Border BorderThickness="0">
                         <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding ContactName}" />
                     </Border>
                 </DataTemplate>
-                <DataTemplate x:Key="CNEdit"/>
+                
+                <DataTemplate x:Key="Edit">
+                    <Border Background="Green" BorderThickness="2" BorderBrush="Green">
+                        <TextBox Text="{Binding ContactName}"/>
+                    </Border>
+                </DataTemplate>
                 
                 <DataTemplate x:Key="CImage">
                     <Border Margin="5" CornerRadius="20" Height="60" Width="60">
@@ -35,11 +40,7 @@
                 </DataTemplate>
 
                 <DataTemplate x:Key="CImageEdit">
-                    <Border Margin="5" CornerRadius="20" Height="60" Width="60">
-                        <Border.Background>
-                            <ImageBrush ImageSource="{Binding ImageUrl}"/>
-                        </Border.Background>
-                    </Border>
+                    <TextBox Background="Green" Width="150" Text="{Binding ImageUrl}"/>
                 </DataTemplate>
                 
                 <DataTemplate x:Key="ContactCard">
@@ -74,14 +75,21 @@
                 </ListView.View>
             </ListView>-->
             
-            <DataGrid IsManipulationEnabled="False" 
+            <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                <Button Content="Save" Command="{Binding SaveContactsCommand}"/>
+                <Button Content="Delete" Command="{Binding DeleteContactsCommand}"/>
+            </StackPanel>
+            
+            <DataGrid IsManipulationEnabled="True" 
                       ScrollViewer.CanContentScroll="True"
                       VerticalScrollBarVisibility="Auto"
                       CanUserDeleteRows="True" 
                       CanUserAddRows="False" 
                       AutoGenerateColumns="False"
                       MaxHeight="300"
+                      SelectedItem="{Binding SelectedContact}"
                       ItemsSource="{Binding Contacts}">
+                
                 <DataGrid.Columns>
                     
                     <!--<DataGridTemplateColumn CellTemplate="{StaticResource ContactCard}"/>-->
@@ -89,14 +97,13 @@
                                             CellTemplate="{StaticResource CImage}"
                                             />
                     <DataGridTemplateColumn Header="Contact Name"
-                                            IsReadOnly="False"
                                             CanUserSort="True"
                                             CanUserResize="True"
                                             CanUserReorder="True"
-                                            CellTemplate="{StaticResource CN}"
+                                            CellEditingTemplate="{StaticResource Edit}"
+                                            CellTemplate="{StaticResource Display}"
                                             Width="*"/>
                     <DataGridTextColumn Header="Mobile"
-                                        
                                         Binding="{Binding Mobile}" Width="*"/>
                     <DataGridTextColumn Header="Address" 
                                         Binding="{Binding Address}" Width="*"/>

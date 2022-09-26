@@ -5,11 +5,38 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ChatApp.UserControls"
              mc:Ignorable="d" 
+             xmlns:cc="clr-namespace:ChatApp.CustomControls"
              xmlns:viewmodels="clr-namespace:ChatApp.ViewModel"
              d:DesignHeight="200" d:DesignWidth="600">
     <UserControl.DataContext>
         <viewmodels:LoginViewModel/>
     </UserControl.DataContext>
+    <UserControl.Resources>
+        <Style TargetType="cc:CustomControl1">
+            <Setter Property="Background" Value="CornflowerBlue"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Width" Value="100"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="Margin" Value="10 0 0 0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="cc:CustomControl1">
+                        <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                                CornerRadius="10 0 10 0"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter VerticalAlignment="Center"
+                                              HorizontalAlignment="Center"/>
+                        </Border>
+
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
     <Border CornerRadius="15 5 15 5" Background="White" >
         <Grid Margin="20">
             <!--#region Row Col definitions-->
@@ -31,7 +58,8 @@
             <Label HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="0" Grid.Row="1" Content="Password:"/>
             <TextBox x:Name="pass" Text="{Binding Password, UpdateSourceTrigger=PropertyChanged}" Padding="5" Margin="10" Grid.Column="1" Grid.Row="1"/>
             <StackPanel Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center">
-                <Button Command="{Binding loginCommand}" IsDefault="True" Margin="10 0 10 10" Content="Login"/>
+                <!--<Button Command="{Binding loginCommand}" IsDefault="True" Margin="10 0 10 10" Content="Login"/>-->
+                <cc:CustomControl1 IsDefault="True" Command="{Binding loginCommand}" Content="Login"/>
             </StackPanel>
         </Grid>
     </Border>

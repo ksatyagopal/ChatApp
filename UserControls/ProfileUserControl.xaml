@@ -28,11 +28,11 @@
             <!--#endregion-->
 
             <Label HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="0" Grid.Row="0" Content="Full Name:"/>
-            <TextBox Text="{Binding Name, Mode=TwoWay}" Padding="5" Margin="10" Grid.Column="1" Grid.Row="0"/>
+            <TextBox Text="{Binding User.FullName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Padding="5" Margin="10" Grid.Column="1" Grid.Row="0"/>
             <Label HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="0" Grid.Row="1" Content="Mail Id:"/>
-            <TextBox Text="{Binding Mailid, Mode=TwoWay}" Padding="5" Margin="10" Grid.Column="1" Grid.Row="1"/>
+            <TextBox Text="{Binding User.MailId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Padding="5" Margin="10" Grid.Column="1" Grid.Row="1"/>
             <Label HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="0" Grid.Row="2" Content="Mobile:"/>
-            <TextBox  Text="{Binding Mobile, Mode=OneWay}" IsEnabled="False" Padding="5" Margin="10" Grid.Column="1" Grid.Row="2"/>
+            <TextBox  Text="{Binding User.Mobile, Mode=OneWay}" IsEnabled="False" Padding="5" Margin="10" Grid.Column="1" Grid.Row="2"/>
             <!--<Ellipse Height="50" Width="50" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="0" Grid.Row="3">
                 <Ellipse.Fill>
                     <ImageBrush ImageSource="{Binding ImageUrl}"/>
@@ -40,10 +40,10 @@
             </Ellipse>-->
             <Label Content="Image URL:" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="0" Grid.Row="3"/>
 
-            <TextBox  Text="{Binding ImageUrl, Mode=TwoWay}" Padding="5" Margin="10" Grid.Column="1" Grid.Row="3"/>
-            <StackPanel Grid.Row="4"  Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center">
-                <Button Command="{Binding SaveDataCommand}" IsDefault="True" Margin="10 0 10 10" Content="Save"/>
-            </StackPanel>
+            <TextBox Text="{Binding User.ImageUrl, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Padding="5" Margin="10" Grid.Column="1" Grid.Row="3"/>
+
+            <Button Command="{Binding SaveDataCommand}" IsDefault="True" Margin="10 0 10 10" Content="Save" Grid.Row="4"  Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+
         </Grid>
     </Border>
 </UserControl>
